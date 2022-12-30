@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="./../../../header_style.css">
+    <link rel="stylesheet" href="./../../../Style.css">
+    <link rel="stylesheet" href="./../../../footer_style.css">
+    <link rel="stylesheet" href="./../../../assets/cart.css">
+
+    <link rel="shortcut icon" type="image/png" href=".././logo/logoDOAN.jpg">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <title>Giỏ hàng</title>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="nav-bar">
+                <i class='bx bx-menu sidebarOpen'></i>
+                <span class="logo navLogo"><a href="/dashboard">
+                    <img src=".././logo/logoDOAN.jpg" alt="Logo lỗi rồi" width="100" height="50" style="margin-left:50px">
+                </a></span>
+                <div class="menu">
+                    <ul class="nav-links">
+                        <li><a href="/dashboard">Trang chủ</a></li>
+                        <li><a href="#footer">Liên hệ</a></li>
+                        <li><a href="/dashboard/add_product">Sản phẩm</a></li>
+                    </ul>
+                </div>
+
+                <div class="darkLight-searchBox">
+                    <div>
+                        <a href="/dashboard/cart">
+                            <div class="dark-light">
+                                <i class="large material-icons">shopping_bag</i>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="dark-light">
+                        <div class="dropdown">
+                            <i class="large material-icons">person</i>
+                            <div class="dropdown-child">
+                                <a class="name_userr">
+                                    Tên: <%= req.user.full_name %>
+                                </a>
+                                <a href="/auth/logout">Đăng xuất</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <br>
+    <div class="site-container" style="height: 100% ;">
+        <div class="cart-page__cols">
+            <!-- BEGIN LEFT COLUMN -->
+            <div class="cart-page__left">
+                <%- include('./../../partials/alert.ejs') %>
+
+                    <div class="cart-table wishlist">
+                        <div class="ex3" style="
+                        height: 590px;
+                        overflow: scroll;">
+                            <% Producted_Order.forEach(i=>{%>
+                                <article class="wishlist__item js-remove">
+                                    <div class="wishlist__cols">
+                                        <div class="wishlist__left">
+                                            <a class="wishlist__image-link">
+                                                <img class="wishlist__image" src="../../.././hinhsanpham/<%= i.img_name %>" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="wishlist__right">
+                                            <div class="wishlist__top wishlist__top_cart">
+                                                <div class="wishlist__col">
+                                                    <h2 class="wishlist__title">
+                                                        <input class="wishlist__link" name="product_name" value="<%= i.product_name%>">
+                                                    </h2>
+                                                </div>
+
+                                                <form action="/dashboard/<%= i.id %>/remove_product_cart/" method="post">
+                                                    <div class="wishlist__col">
+                                                        <button class="wishlist__remove remove-button js-remove-button" type="submit"></button>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+                                            <div class="wishlist__bottom wishlist__bottom_cart">
+                                                <div class="wishlist__cart-col">
+                                                    <!-- <span class="wishlist__old-price">$52.99</span> -->
+                                                    <span class="wishlist__price wishlist__price_small price" id="price" value="<%= i.price%>"><%= i.price%></span>
+                                                </div>
+                                                <div class="wishlist__cart-col">
+                                                    <div class="wishlist__count count js-count">
+                                                        <form action="/dashboard/<%= i.id%>/minus" method="post">
+                                                            <button class="count__button count__button_minus js-count-minus" name="minus"></button>
+                                                        </form>
+                                                        <input class="count__input js-count-input" name="amount" id="amount" disabled type="text" value="<%= i.product_quantity%>" maxlength="4">
+                                                        <form action="/dashboard/<%= i.id%>/plus" method="post">
+                                                            <button class="count__button count__button_plus js-count-plus" name="plus"></button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="wishlist__cart-col">
+                                                <span class="wishlist__price wishlist__price_total" id="total"></span>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                                <%})  %>
+                        </div>
+                    </div>
+                    <form action="/dashboard/confirm_order" method="post">
+                        <% Producted_Order.forEach(i=>{%>
+                            <input type="hidden" name="product_name" value="<%= i.product_name%>">
+                            <input type="hidden" name="price" value="<%= i.price%>">
+                            <input type="hidden" name="amount" value="<%= i.product_quantity%>">
+                            <%})%>
+                                <button type="submit" class="your-order__button button">
+                                    <span class="button__text">Xác nhận đơn hàng</span>
+                                </button>
+                    </form>
+
+            </div>
+            <!-- LEFT COLUMN END -->
+
+            <!-- BEGIN RIGHT COLUMN -->
+
+            <aside class="cart-page__right" style="width: 600px">
+                <section class="your-order">
+                    <h3 class="your-order__title">Hóa đơn của bạn</h3>
+                    <div style="height: 500px; overflow: scroll; width: 550px; padding: 0 15px 0 15px;">
+                        <ul class="your-order__list">
+                            <li class="your-order__item">
+                                <div class="your-order__col">
+                                    <span class="your-order__text" style="font-weight: bold ;">Sản phẩm</span>
+                                </div>
+                                <div class="your-order__col">
+                                    <span class="your-order__text" style="font-weight: bold ;">Giá tiền</span>
+                                </div>
+                            </li>
+                            <% Producted_Order.forEach(i=>{%>
+                                <li class="your-order__item">
+                                    <div class="your-order__col">
+                                        <span class="your-order__text"><%= i.product_name%></span>
+                                    </div>
+                                    <div class="your-order__col">
+                                        <span class="your-order__text"><%= i.total%>.000$</span>
+                                    </div>
+                                </li>
+                                <%})%>
+                                    <li class="your-order__item">
+                                        <div class="your-order__col">
+                                            <span class="your-order__text" style="font-weight: bold ;">Mã giảm giá</span>
+                                        </div>
+                                        <div class="your-order__col">
+                                            <span class="your-order__text">Không</span>
+                                        </div>
+                                    </li>
+                    </div>
+                    <!-- <li class="your-order__item">
+                            <div class="your-order__col">
+                                <span class="your-order__text">Delivery&nbsp;&nbsp;<span>(Aug 02 at 16:00)</span></span>
+                            </div>
+                            <div class="your-order__col">
+                                <span class="your-order__price">$16</span>
+                            </div>
+                        </li> -->
+                    </ul>
+
+                    <div class="your-order__bottom">
+                        <div class="your-order__col">
+                            <span class="your-order__bottom-text">Thành tiền</span>
+                        </div>
+                        <div class="your-order__col">
+                            <span class="your-order__bottom-price"><%= req.session.total == null? '0' : req.session.total %>.000$ </span>
+                        </div>
+                    </div>
+                    <button class="your-order__button button">
+                            <span class="button__text">Thanh toán</span>
+                        </button>
+                </section>
+            </aside>
+            <!-- RIGHT COLUMN END -->
+
+            <!-- </div> -->
+
+        </div>
+    </div>
+    <footer>
+        <div class="footer-container" id="footer">
+            <div class="social">
+                <h1>
+                    Liên hệ
+                </h1>
+                <ul>
+                    <li class="social-list"><a href="https://www.facebook.com/binh123thien/"><i class="fa fa-facebook"></i></a></li>
+                    <li class="social-list"><a href="#"><abbr class="social-mail" title="19119075@student.hcmute.edu.vn" style="color:white;"><i class="fa fa-envelope-o"></i></abbr></a></li>
+                    <li class="social-list"><a href="https://www.instagram.com/vbinh_1810/"><i class="fa fa-instagram"></i></a></li>
+                </ul>
+            </div>
+            <small>@2022 Giày Dép Asia</small>
+        </div>
+    </footer>
+</body>
+
+</html>
+
+<script src="../../../assets/js/libs/jquery-3.5.1.min.js"></script>
+<script src="../../../assets/js/libs/jquery-migrate-1.4.1.min.js"></script>
+<script src="../../../assets/js/main.js"></script>

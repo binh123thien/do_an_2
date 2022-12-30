@@ -1,0 +1,44 @@
+{
+    "name": "do_an_2",
+    "script": "app.js",
+    "watch": [
+        "component",
+        "views",
+        "app.js"
+    ],
+    "ignore_watch": [
+        "node_modules"
+    ],
+    "watch_options": {
+        "followSymlinks": false
+    },
+    "instances": 1,
+    "exec_mode": "cluster",
+    "env": {
+        "NODE_ENV": "dev",
+        "SENDGRID_API_KEY": "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",
+        "port": 3000,
+        "config": {
+            "mysql": {
+                "database": {
+                    "user": "root",
+                    "pass": "",
+
+                    "db": "do_an2",
+                    "server": {
+                        "host": "localhost",
+                        "dialect": "mysql",
+                        "dialectOptions": {},
+                        "pool": {
+                            "max": 10,
+                            "min": 0,
+                            "acquire": 30000,
+                            "idle": 10000,
+                            "handleDisconnects": true
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,69 @@
+footer {
+    background: #000;
+    color: whitesmoke;
+    text-align: center;
+    width: 100%;
+    height: 35vh;
+}
+
+.thong-tin {
+    padding-bottom: 20px;
+}
+
+.social h1 {
+    padding-top: 30px;
+    padding-bottom: 10px;
+}
+
+.social ul {
+    list-style-type: none;
+    text-align: center;
+}
+
+.social li {
+    display: inline-block;
+    margin-right: 30px;
+}
+
+.social a {
+    text-decoration: none;
+}
+
+.social a i {
+    display: block;
+    width: 40px;
+    height: auto;
+    border-radius: 50%;
+    line-height: 40px;
+    background: #000;
+    margin-right: 25px;
+    color: whitesmoke;
+}
+
+.social a i.fa-facebook {
+    background-color: #3B5998;
+}
+
+.social a i.fa-envelope-o {
+    background-color: #DD4B39;
+}
+
+.social a i.fa-instagram {
+    background-color: #B7242A;
+}
+
+abbr {
+    text-decoration: none;
+    position: relative;
+}
+
+abbr:hover::after {
+    position: absolute;
+    bottom: 100%;
+    left: 100%;
+    display: block;
+    padding: 1em;
+    background: whitesmoke;
+    content: attr(title);
+    color: #000;
+}

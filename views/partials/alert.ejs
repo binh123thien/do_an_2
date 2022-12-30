@@ -1,0 +1,11 @@
+<%if(locals.success_messages != ''){%>
+    <div class="alert alert-success border-0 alert-dismissible" style="color: rgb(47, 100, 71);">
+        <!-- <button type="button" class="close" data-dismiss="alert"><span>×</span></button> -->
+        <%= locals.success_messages %>
+    </div>
+    <%}%>
+        <%if(locals.error_messages != ''){%>
+            <div class="alert alert-danger border-0 alert-dismissible" style="color: red;">
+                <%= locals.error_messages %>
+            </div>
+            <%}%>
